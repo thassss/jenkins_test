@@ -1,28 +1,32 @@
 pipeline {
     agent any
 
+    environment {
+        DEPLOY_ENV = 'production'
+    }
+
     stages {
         stage('Build') {
             steps {
                 echo 'Building...'
             }
         }
-        
-        stage('Test') {
+
+        stage('Deploy to Production') {
             when {
-                branch 'main'
-            }
-            steps {
-                echo 'Testing on main branch...'
-            }
-        }
-        
-        stage('Deploy') {
-            when {
-                branch 'main'
+                environment name: 'DEPLOY_ENV', value: 'production'
             }
             steps {
                 echo 'Deploying to production...'
+            }
+        }
+
+        stage('Deploy to Staging') {
+            when {
+                environment name: 'DEPLOY_ENV', value: 'staging'
+            }
+            steps {
+                echo 'Deploying to staging...'
             }
         }
     }
