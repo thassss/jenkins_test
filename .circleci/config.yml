@@ -40,4 +40,4 @@ workflows:
     # Inside the workflow, you define the jobs you want to run.
     jobs:
       - say-hello:
-        role_arn: "arn:aws:iam::206171157150:role/cicd-circleci-ecr-role"
+        role_arn: arn:aws:iam::206171157150:role/cicd-circleci-ecr-role
