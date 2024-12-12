@@ -6,17 +6,17 @@ version: 2.1
 # See: https://circleci.com/docs/jobs-steps/#jobs-overview & https://circleci.com/docs/configuration-reference/#jobs
 jobs:
   say-hello:
+    parameters:
+      role_arn:
+        type: string
+        description: ARN of the IAM Role to assume
+
     # Specify the execution environment. You can specify an image from Docker Hub or use one of our convenience images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/executor-intro/ & https://circleci.com/docs/configuration-reference/#executor-job
     docker:
       # Specify the version you desire here
       # See: https://circleci.com/developer/images/image/cimg/base
       - image: cimg/base:current
-
-    parameters:
-      role_arn:
-        type: string
-        description: ARN of the IAM Role to assume
 
     # Add steps to the job
     # See: https://circleci.com/docs/jobs-steps/#steps-overview & https://circleci.com/docs/configuration-reference/#steps
@@ -30,8 +30,8 @@ jobs:
           name: Debug Parameter Values
           command: |
             echo "role_arn: << parameters.role_arn >>"
-          environment:
-            role_arn: << parameters.role_arn >>
+          # environment:
+          #   role_arn: << parameters.role_arn >>
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/workflows/ & https://circleci.com/docs/configuration-reference/#workflows
