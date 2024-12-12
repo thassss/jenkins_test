@@ -13,6 +13,11 @@ jobs:
       # See: https://circleci.com/developer/images/image/cimg/base
       - image: cimg/base:current
 
+    parameters:
+      role_arn:
+        type: string
+        description: ARN of the IAM Role to assume
+
     # Add steps to the job
     # See: https://circleci.com/docs/jobs-steps/#steps-overview & https://circleci.com/docs/configuration-reference/#steps
     steps:
@@ -21,6 +26,12 @@ jobs:
       - run:
           name: "Say hello"
           command: "echo Hello, World!"
+      - run:
+          name: Debug Parameter Values
+          command: |
+            echo "role_arn: << parameters.role_arn >>"
+          environment:
+            role_arn: << parameters.role_arn >>
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/workflows/ & https://circleci.com/docs/configuration-reference/#workflows
@@ -29,3 +40,4 @@ workflows:
     # Inside the workflow, you define the jobs you want to run.
     jobs:
       - say-hello
+        role_arn: "arn:aws:iam::206171157150:role/cicd-circleci-ecr-role"
